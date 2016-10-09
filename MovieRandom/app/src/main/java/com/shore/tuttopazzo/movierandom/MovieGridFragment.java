@@ -1,25 +1,24 @@
 package com.shore.tuttopazzo.movierandom;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * { ListFragment.OnFragmentInteractionListener} interface
+ * { MovieGridFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ListFragment#newInstance} factory method to
+ * Use the {@link MovieGridFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListFragment extends Fragment {
+public class MovieGridFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,10 +30,10 @@ public class ListFragment extends Fragment {
 
 
     private TextView textView;
-
+    private GridView movieGrid;
    // private OnFragmentInteractionListener mListener;
 
-    public ListFragment() {
+    public MovieGridFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +43,11 @@ public class ListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ListFragment.
+     * @return A new instance of fragment MovieGridFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListFragment newInstance(String param1, String param2) {
-        ListFragment fragment = new ListFragment();
+    public static MovieGridFragment newInstance(String param1, String param2) {
+        MovieGridFragment fragment = new MovieGridFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,12 +58,13 @@ public class ListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("charan","getArguments() :"+getArguments());
+      //  Log.i("charan","getArguments() :"+getArguments());
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
 
 
     }
@@ -75,8 +75,12 @@ public class ListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =inflater.inflate(R.layout.fragment_list, container, false);
         textView=(TextView)rootView.findViewById(R.id.fragText);
+        movieGrid=(GridView) rootView.findViewById(R.id.movieGrid);
 
-        //textView.setText(mParam1);
+
+        movieGrid.setAdapter(new MovieGridAdapter(getActivity()));
+
+        textView.setText(mParam1);
         return rootView;
     }
 

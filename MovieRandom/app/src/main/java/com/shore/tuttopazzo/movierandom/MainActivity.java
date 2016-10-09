@@ -1,14 +1,8 @@
 package com.shore.tuttopazzo.movierandom;
 
-import android.app.*;
-
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.*;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,21 +83,21 @@ public class MainActivity extends AppCompatActivity
 
         switch(id){
             case R.id.nav_action: {
-                frag = new ListFragment();
+                frag = new MovieGridFragment();
                 bundle.putString("param1", "This is action guy");
                 bundle.putString("param2", "This is action guy");
                 frag.setArguments(bundle);
                 break;
             }
             case R.id.nav_anime: {
-                frag = new ListFragment();
+                frag = new MovieGridFragment();
                 bundle.putString("param1", "This is anime guy");
                 bundle.putString("param2", "This is anime guy");
                 frag.setArguments(bundle);
                 break;
             }
              default:
-                frag=new ListFragment();
+                frag=new MovieGridFragment();
                  bundle.putString("param1", "This is default guy");
                  bundle.putString("param2", "This is default guy");
                  break;
@@ -114,7 +107,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
 //            TextView testText=(TextView)findViewById(R.id.testText);
 //            testText.setText("Yo!! this is Action guy");
-         *//*   android.support.v4.app.Fragment frag=new ListFragment();
+         *//*   android.support.v4.app.Fragment frag=new MovieGridFragment();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentMainLayout,frag).commit();*//*
 
@@ -131,7 +124,7 @@ public class MainActivity extends AppCompatActivity
         }*/
 
         frag.setArguments(bundle);
-        Log.i("charan","main 2 "+frag.getArguments().getString("param1","default"));
+
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.contentMainLayout,frag).commit();
 
