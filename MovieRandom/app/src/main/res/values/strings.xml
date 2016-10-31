@@ -7,5 +7,10 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment"></string>
+
+
+
+    <string name="content_authority">com.shore.tuttopazzo.movierandom</string>
+    <string name="sync_account_type">tuttopazzzo.shore.com</string>
 </resources>

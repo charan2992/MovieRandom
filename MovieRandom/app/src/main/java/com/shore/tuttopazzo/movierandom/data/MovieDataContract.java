@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * Created by TuttoPazzo$$ on 08-Oct-16.
@@ -35,7 +36,12 @@ public class MovieDataContract {
 
         //content://com.shore.tuttopazzo.movierandom/movie/genre
         public static Uri buildMovieGenreUri(String genre) {
-            return CONTENT_URI.buildUpon().appendPath(genre).build();
+
+            Uri uri=CONTENT_URI.buildUpon().appendPath(genre).build();
+            Log.i("charan"," buildMovieGenreUri"+uri.toString());
+
+
+            return uri;
         }
 
         public static String getGenreFromUri(Uri uri) {

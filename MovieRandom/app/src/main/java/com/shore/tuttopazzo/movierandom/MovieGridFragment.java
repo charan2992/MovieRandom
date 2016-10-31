@@ -1,13 +1,23 @@
 package com.shore.tuttopazzo.movierandom;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import com.shore.tuttopazzo.movierandom.sync.FetchMovieDataSyncAdapter;
+import com.shore.tuttopazzo.movierandom.data.MovieDBHellper;
+import com.shore.tuttopazzo.movierandom.data.MovieDataContract;
 
 
 /**
@@ -18,9 +28,31 @@ import android.widget.TextView;
  * Use the {@link MovieGridFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieGridFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class MovieGridFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+
+
+    private MovieGridCursorAdapter movieAdapter;
+    private String genreSelected;
+
+    private static final String[] MOVIE_COLUMNS = {
+            // In this case the id needs to be fully qualified with a table name, since
+            // the content provider joins the location & weather tables in the background
+            // (both have an _id column)
+            // On the one hand, that's annoying.  On the other, you can search the weather table
+            // using the location set by the user, which is only in the Location table.
+            // So the convenience is worth it.
+            MovieDataContract.MovieEntry._ID,
+            MovieDataContract.MovieEntry.COLUMN_MOVIE,
+            MovieDataContract.MovieEntry.COLUMN_GENRE
+
+    };
+    static final int _ID = 0;
+    static final int COL_MOVIE = 1;
+    static final int COL_GENRE = 2;
+
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -58,15 +90,24 @@ public class MovieGridFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  Log.i("charan","getArguments() :"+getArguments());
+        Log.i("charan","on Create MovieGrodFragment");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        genreSelected=mParam1;
+
+        SQLiteDatabase db= new MovieDBHellper(getActivity()).getWritableDatabase();
+
+        db.close();
 
 
-
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(0, null, this);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -77,11 +118,42 @@ public class MovieGridFragment extends Fragment {
         textView=(TextView)rootView.findViewById(R.id.fragText);
         movieGrid=(GridView) rootView.findViewById(R.id.movieGrid);
 
+        movieAdapter=new MovieGridCursorAdapter(getActivity(),null);
+       // movieGrid.setAdapter(new MovieGridAdapter(getActivity()));
+        movieGrid.setAdapter(movieAdapter);
 
-        movieGrid.setAdapter(new MovieGridAdapter(getActivity()));
 
-        textView.setText(mParam1);
+        //textView.setText(mParam1);
         return rootView;
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+       String sortOrder = MovieDataContract.MovieEntry.COLUMN_MOVIE + " ASC";
+
+        Uri movieDataUri = MovieDataContract.MovieEntry.buildMovieGenreUri(genreSelected);
+          //Uri movieDataUri=MovieDataContract.MovieEntry.CONTENT_URI;
+
+
+        return new CursorLoader(getActivity(),
+                movieDataUri,
+                MOVIE_COLUMNS,
+                null,
+                null,
+                sortOrder);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+     movieAdapter.swapCursor(data);
+      //  Log.i("charan","load finished "+data.moveToNext());
+        movieGrid.setAdapter(movieAdapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        movieAdapter.swapCursor(null);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

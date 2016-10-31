@@ -2,7 +2,6 @@ package com.shore.tuttopazzo.movierandom;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.shore.tuttopazzo.movierandom.sync.FetchMovieDataSyncAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FetchMovieDataSyncAdapter.initializeSyncAdapter(this);
+        FetchMovieDataSyncAdapter.syncImmediately(this);
     }
 
     @Override
@@ -84,14 +88,14 @@ public class MainActivity extends AppCompatActivity
         switch(id){
             case R.id.nav_action: {
                 frag = new MovieGridFragment();
-                bundle.putString("param1", "This is action guy");
+                bundle.putString("param1", "action");
                 bundle.putString("param2", "This is action guy");
                 frag.setArguments(bundle);
                 break;
             }
             case R.id.nav_anime: {
                 frag = new MovieGridFragment();
-                bundle.putString("param1", "This is anime guy");
+                bundle.putString("param1", "anime");
                 bundle.putString("param2", "This is anime guy");
                 frag.setArguments(bundle);
                 break;

@@ -1,8 +1,12 @@
 package com.shore.tuttopazzo.movierandom.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.shore.tuttopazzo.movierandom.data.MovieDataContract.MovieEntry;
 
 /**
@@ -22,6 +26,8 @@ public class MovieDBHellper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
+        Log.i("charan","onCreate DB");
+
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
                 MovieEntry._ID + " INTEGER PRIMARY KEY," +
                 MovieEntry.COLUMN_MOVIE + " TEXT UNIQUE NOT NULL, " +
@@ -30,6 +36,9 @@ public class MovieDBHellper extends SQLiteOpenHelper {
                 " );";
 
         sqLiteDatabase.execSQL(SQL_CREATE_MOVIE_TABLE);
+
+
+      //  insertDefaultValues(sqLiteDatabase);
     }
 
     @Override
@@ -42,6 +51,37 @@ public class MovieDBHellper extends SQLiteOpenHelper {
         // should be your top priority before modifying this method.
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + MovieEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
+    }
+
+    private void insertDefaultValues(SQLiteDatabase sqLiteDatabase){
+        ContentValues testValues = new ContentValues();
+        testValues.put(MovieEntry.COLUMN_MOVIE, "Inception");
+        testValues.put(MovieEntry.COLUMN_GENRE, "action");
+
+
+        Log.i("charan","inserting default values");
+
+        sqLiteDatabase.insert(MovieEntry.TABLE_NAME,null,testValues);
+
+        testValues.put(MovieEntry.COLUMN_MOVIE, "Wall-E");
+        testValues.put(MovieEntry.COLUMN_GENRE, "anime");
+
+        sqLiteDatabase.insert(MovieEntry.TABLE_NAME,null,testValues);
+
+        Log.i("charan","inserted default values");
+
+       /* Cursor c = sqLiteDatabase.rawQuery("SELECT movie  FROM  movies", null);
+
+        c.moveToFirst();
+
+        int columnNameIndex = c.getColumnIndex("movie");
+
+        String movie =c.getString(columnNameIndex);
+
+        Log.i("charan", "getting inserted values"+movie);*/
+
+
+
     }
 
 
