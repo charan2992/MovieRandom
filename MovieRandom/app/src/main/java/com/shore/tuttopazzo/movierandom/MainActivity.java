@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity
             }
              default:
                 frag=new MovieGridFragment();
-                 bundle.putString("param1", "This is default guy");
+                 bundle.putString("param1", "This is default guy bla");
                  bundle.putString("param2", "This is default guy");
                  break;
         }
