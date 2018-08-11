@@ -116,6 +116,8 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.contentMainLayout,frag).commit();*//*
 
         } else if (id == R.id.nav_anime) {
+        
+        
 
         } else if (id == R.id.nav_slideshow) {
 
