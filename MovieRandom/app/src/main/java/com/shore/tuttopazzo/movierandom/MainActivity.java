@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity
 //            TextView testText=(TextView)findViewById(R.id.testText);
  * 
  * 
+ * 
+ * 
 //            testText.setText("Yo!! this is Action guy");
          *//*   android.support.v4.app.Fragment frag=new MovieGridFragment();
             FragmentManager fragmentManager=getSupportFragmentManager();
