@@ -110,6 +110,8 @@ public class MainActivity extends AppCompatActivity
       /*  if (id == R.id.nav_action) {
             // Handle the camera action
 //            TextView testText=(TextView)findViewById(R.id.testText);
+ * 
+ * 
 //            testText.setText("Yo!! this is Action guy");
          *//*   android.support.v4.app.Fragment frag=new MovieGridFragment();
             FragmentManager fragmentManager=getSupportFragmentManager();
